@@ -1,0 +1,40 @@
+1.	Setting up Virtual Box and Cloudera using the following link:
+http://snap.stanford.edu/class/cs246-2017/homeworks/hw0/tutorialv3.pdf
+
+2.	Virtual Machine includes:
+•	CentOS 6.4
+•	JDK 7 
+•	Hadoop 2.5.0
+•	Eclipse 4.2.6
+
+3.	Hadoop can run in three modes:
+•	Standalone mode
+•	Pseudo-distributed mode
+•	Fully-distributed mode
+
+4.	In this exercise we are going to run the two input files:
+http://www.gutenberg.org/cache/epub/100/pg100.txt and http://www.gutenberg.org/files/100/100-0.txt in Standalone and Pseudo-distributed mode.
+
+5.	Standalone Mode:
+6.	Pseudo-distributed mode:
+a.	We are given the WordCount.java file. Copy and Paste the code in Eclipse by providing appropriate class name.
+b.	Create cloudera folder in HDFS. For this we need to first login as root user:
+i.	sudo su
+ii.	hadoop fs -mkdir /user/cloudera
+iii.	exit
+c.	Create input directory in HDFS:
+i.	hadoop fs -mkdir /user/cloudera/wordcount /user/cloudera/wordcount/input
+d.	Place the input file in the above created directory:
+i.	hadoop fs -put file* /user/cloudera/wordcount/input
+Here, file* - this is the filepath of the input file.
+e.	Compile the package installation of CDH:
+i.	mkdir -p build
+ii.	javac -cp /usr/lib/hadoop/*:/usr/lib/hadoop-mapreduce/* /home/cloudera/workspace/WordCount/src/edu/stanford/cs246/wordcount/WordCount.java -d build -Xlint
+f.	Create a JAR file for WordCount:
+i.	jar -cvf wordcount.jar -C build/ .
+g.	Runt the WordCount from JAR file by passing the input and output directories:
+i.	hadoop jar wordcount.jar org.myorg.WordCount /user/cloudera/wordcount/input /user/cloudera/wordcount/output
+h.	To fetch the output on the screen:
+i.	hadoop fs -cat /user/cloudera/wordcount/output/*
+
+
